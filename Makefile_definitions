@@ -1,0 +1,35 @@
+CPUCC = g++
+GPUCC = /usr/local/cuda/bin/nvcc #--expt-relaxed-constexpr
+        #-ptx #-src-in-ptx #--generate-line-info #-lineinfo #-G #-g #-G  #-prec-div=false 
+
+
+# For RTX 3090
+CUDA_TARGET_FLAGS = --gpu-architecture=sm_86
+# For RTX 2080 Ti
+# CUDA_TARGET_FLAGS = --gpu-architecture=sm_75
+# For GTX 1080
+# CUDA_TARGET_FLAGS = --gpu-architecture=sm_61
+
+
+CXXFLAGS = -std=c++17 
+           # -std=c++17 is necessary for compiling cugraph code
+           # -DLIN #-O3 #-DDP -E
+CXXFLAGS += -I/usr/local/cuda/include/ \
+            -I/usr/users/intercell/ic_he/miniconda3/envs/cugraph_dev/include/
+CC_CXXFLAGS = -Ofast -fopenmp -funroll-loops -march=native
+              #-march=skylake-avx512 #-mavx -mavx2 
+              #-Wvector-operation-performance 
+              #-fopt-info-loop-optimized #-fopt-info-vec-missed #-ftree-vectorize
+CUDA_CXXFLAGS = $(CUDA_TARGET_FLAGS)
+                #--ptxas-options=-v #--warn-on-local-memory-usage #--resource-usage 
+
+
+CC_LDFLAGS = -fopenmp
+CUDA_LDFLAGS = -L/usr/local/cuda/lib64/ 
+CUGRAPH_LDFLAGS = -L/usr/users/intercell/ic_he/miniconda3/envs/cugraph_dev/lib/
+
+
+CC_LIBS = 
+          #-lopenblas
+CUDA_LIBS = -lcuda -lcublas -lcudart -lcudadevrt -lcurand -lcusolver -lnvgraph -lcusparse
+CUGRAPH_LIBS = -lcugraph
