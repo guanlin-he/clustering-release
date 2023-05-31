@@ -10,7 +10,7 @@ Although the code contain comments, referring to the dissertation can help you u
 
 ## Structure
 - The `main.cc` file in the home directory contains the top-level function `main()`. 
-- All the other `.cc` files lie in the `modules` folder, while the `.h` files are put into the `include` folder. They are further classified by subject in the second-level directory. 
+- All the other `.cc` files and `.cu` files lie in the `modules` folder, while the `.h` files are put into the `include` folder. They are further classified by subject in the second-level directory. 
 - The charateristics and locations of benchmark datasets are defined in the `include/datasets.h` file.
 - The default settings of various program parameters are defined in the `include/config.h` file.
 - The compilation settings are specified in `Makefile_definitions` under the home directory and in `Makefile` under different levels of directories.
