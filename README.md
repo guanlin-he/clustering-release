@@ -1,5 +1,5 @@
 # Overview
-Welcome! This repository provides the code related to Guanlin HE's doctoral dissertation entitled "[Parallel algorithms for clustering large datasets on CPU-GPU heterogeneous architectures](https://www.theses.fr/2022UPASG062)" (defended on October 19th, 2022 at Université Paris-Saclay). The code includes several optimized parallel implementations of clustering algorithms:
+Welcome! This repository provides the code related to Guanlin HE's doctoral dissertation entitled "[Parallel algorithms for clustering large datasets on CPU-GPU heterogeneous architectures](https://theses.hal.science/tel-04114475)" (defended on October 19th, 2022 at Université Paris-Saclay). The code includes several optimized parallel implementations of clustering algorithms:
 1. Parallel k-means(++) clustering on CPU
 2. Parallel k-means(++) clustering on GPU
 3. Parallel spectral clustering on CPU
