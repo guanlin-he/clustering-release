@@ -28,250 +28,198 @@ typedef float T_real;
 #endif
 
 
-// Read a file of real numbers (derived from MC-K-means: https://gitlab.cs.univie.ac.at/martinp16cs/MC-K-means/-/tree/master/)
-void read_file_real ( T_real *array, const size_t N, const size_t D, 
-                      const char filename[], const char delim[], 
-                      bool isBinary, bool isTransposed )
+// Read a file of integers
+void read_file_int (int *array, size_t nbPoints, size_t nbDims, 
+                    const char filename[], const char delim[], 
+                    bool isTransposed)
 {
-    FILE *fp;  // File pointer
-    size_t counts = 0;
-    size_t i = 0, j = 0, total = 0;
+    // Declaration
+    FILE *fp = NULL;  // File pointer
     char line[MAX_LINE_LENGTH];
     char *token = NULL;
+    size_t i = 0, j = 0, total = 0;
 
+    // Open the file
     fp = fopen(filename, "r");  // Open the file in "read-only" mode
     if (fp == NULL) {           // Check if the file has been successfully opened
         fprintf(stderr, "    Fail to open the file: %s\n", filename);
         exit(EXIT_FAILURE);
     }
 
-    if (isBinary) {
-        // Read a binary file (everything at once)
-        counts = fread(array, sizeof(T_real) * N * D, 1, fp);
-        if (counts == 0) {
-            fprintf(stderr, "    Fail to read the binary file: %s\n", filename);
-            exit(EXIT_FAILURE);
-        }
-    } else {
-        // read a text file line by line
-        // format: there are D values each line. Each value is separated by a delimiter (e.g. ",", " ", "\t").
-        // notice MAX_LINE_LENGTH = 2049
-        i = 0;
-        while ( fgets(line, MAX_LINE_LENGTH, fp) != NULL && i < N ) {
-            if (line[0] != '%'){ // ignore '%' comment char
-                // The C library function char *strtok(char *str, const char *delim) 
-                // breaks string str into a series of tokens using the delimiter delim.
-                // Get the first token
-                token = strtok(line, delim); 
-                
-                // Walk through other tokens
-                j = 0;
-                if (isTransposed) {
-                    while (token != NULL && j < D) {
-                        array[j*N + i] = atof(token);
-                        token = strtok(NULL, delim);
-                        j++;
-                    }
-                } else {
-                    while (token != NULL && j < D) {
-                        array[i*D + j] = atof(token);
-                        token = strtok(NULL, delim);
-                        j++;
-                    }
+    // Read a text file line by line
+    // Note that there are nbDims values per line and each value is separated by a delimiter (e.g. ",", " ", "\t").
+    while (fgets(line, MAX_LINE_LENGTH, fp) != NULL && i < nbPoints) {
+        if (line[0] != '%'){  // Ignore the lines that begin with '%' (comments)
+            // The C library function char *strtok(char *str, const char *delim) 
+            // breaks string str into a series of tokens using the delimiter delim.
+            // Get the first token
+            token = strtok(line, delim); 
+            
+            // Walk through other tokens
+            j = 0;
+            if (isTransposed) {
+                while (token != NULL && j < nbDims) {
+                    array[j*nbPoints + i] = atoi(token);
+                    token = strtok(NULL, delim);
+                    j++;
                 }
-                i++;
-                total += j;
+            } else {
+                while (token != NULL && j < nbDims) {
+                    array[i*nbDims + j] = atoi(token);
+                    token = strtok(NULL, delim);
+                    j++;
+                }
             }
-        }
-        
-        if (total != N*D) {
-            fprintf(stderr, "    Fail to read the text file: %s\n", filename);
-            exit(EXIT_FAILURE);
+            i++;
+            total += j;
         }
     }
+    
+    if (total != nbPoints*nbDims) {
+        fprintf(stderr, "    Fail to read the text file: %s\n", filename);
+        exit(EXIT_FAILURE);
+    }
 
+    // Close the file
     fclose(fp);
 }
 
 
-// Read a file of integers (derived from MC-K-means: https://gitlab.cs.univie.ac.at/martinp16cs/MC-K-means/-/tree/master/)
-void read_file_int ( int *array, const size_t N, const size_t D, 
+// Read a file of real numbers
+void read_file_real (T_real *array, size_t nbPoints, size_t nbDims, 
                      const char filename[], const char delim[], 
-                     bool isBinary, bool isTransposed )
+                     bool isTransposed)
 {
-    FILE *fp;  // File pointer
-    size_t counts = 0;
-    size_t i = 0, j = 0, total = 0;
+    // Declaration
+    FILE *fp = NULL;  // File pointer
     char line[MAX_LINE_LENGTH];
     char *token = NULL;
+    size_t i = 0, j = 0, total = 0;
 
+    // Open the file
     fp = fopen(filename, "r");  // Open the file in "read-only" mode
     if (fp == NULL) {           // Check if the file has been successfully opened
         fprintf(stderr, "    Fail to open the file: %s\n", filename);
         exit(EXIT_FAILURE);
     }
 
-    if (isBinary) {
-        // Read a binary file (everything at once)
-        counts = fread(array, sizeof(int) * N * D, 1, fp);
-        if (counts == 0) {
-            fprintf(stderr, "    Fail to read the binary file: %s\n", filename);
-            exit(EXIT_FAILURE);
-        }
-    } else {
-        // read a text file line by line
-        // format: there are D values each line. Each value is separated by a delimiter (e.g. ",", " ", "\t").
-        // notice MAX_LINE_LENGTH = 2049
-        i = 0;
-        while ( fgets(line, MAX_LINE_LENGTH, fp) != NULL && i < N ) {
-            if (line[0] != '%'){ // ignore '%' comment char
-                // The C library function char *strtok(char *str, const char *delim) 
-                // breaks string str into a series of tokens using the delimiter delim.
-                // Get the first token
-                token = strtok(line, delim); 
-                
-                // Walk through other tokens
-                j = 0;
-                if (isTransposed) {
-                    while (token != NULL && j < D) {
-                        array[j*N + i] = atoi(token);
-                        token = strtok(NULL, delim);
-                        j++;
-                    }
-                } else {
-                    while (token != NULL && j < D) {
-                        array[i*D + j] = atoi(token);
-                        token = strtok(NULL, delim);
-                        j++;
-                    }
+    // Read a text file line by line
+    // Note that there are nbDims values per line and each value is separated by a delimiter (e.g. ",", " ", "\t").
+    while (fgets(line, MAX_LINE_LENGTH, fp) != NULL && i < nbPoints) {
+        if (line[0] != '%'){  // Ignore the lines that begin with '%' (comments)
+            // The C library function char *strtok(char *str, const char *delim) 
+            // breaks string str into a series of tokens using the delimiter delim.
+            // Get the first token
+            token = strtok(line, delim); 
+            
+            // Walk through other tokens
+            j = 0;
+            if (isTransposed) {
+                while (token != NULL && j < nbDims) {
+                    array[j*nbPoints + i] = atof(token);
+                    token = strtok(NULL, delim);
+                    j++;
                 }
-                i++;
-                total += j;
+            } else {
+                while (token != NULL && j < nbDims) {
+                    array[i*nbDims + j] = atof(token);
+                    token = strtok(NULL, delim);
+                    j++;
+                }
             }
-        }
-        
-        if (total != N*D) {
-            fprintf(stderr, "    Fail to read the text file: %s\n", filename);
-            exit(EXIT_FAILURE);
+            i++;
+            total += j;
         }
     }
+    
+    if (total != nbPoints*nbDims) {
+        fprintf(stderr, "    Fail to read the text file: %s\n", filename);
+        exit(EXIT_FAILURE);
+    }
 
+    // Close the file
     fclose(fp);
 }
 
 
-// Save a file of real numbers (derived from MC-K-means: https://gitlab.cs.univie.ac.at/martinp16cs/MC-K-means/-/tree/master/)
-void save_file_real ( T_real *array, const size_t N, const size_t D, 
-                      const char filename[], const char delim[], bool isBinary )
+// Save a file of integers
+void save_file_int (int *array, size_t nbPoints, size_t nbDims, 
+                    const char filename[], const char delim[])
 {
-    FILE *fp;  // File pointer
+    // Declaration
+    FILE *fp = NULL;  // File pointer
+    
+    // Open the file
+    fp = fopen(filename, "w");
+    if (fp == NULL) {
+        printf("    Fail to open the file: %s\n", filename);
+        exit(EXIT_FAILURE);
+    }
+        
+    // Write a text file line by line
+    char line[MAX_LINE_LENGTH];
+    char strInt[50];
+    for (size_t i = 0; i < nbPoints; i++) {
+        strcpy(line, "");
+        for (size_t j = 0; j < nbDims; j++) {
+            // The C library function char *strcpy(char *dest, const char *src) 
+            // copies the string pointed to, by src to dest.
+            strcpy(strInt, "");
+            
+            // The C library function int sprintf(char *str, const char *format, ...)
+            // sends formatted output to a string pointed to, by str.
+            sprintf(strInt, "%d%s", array[i*nbDims + j], delim);
+            
+            // The C library function char *strcat(char *dest, const char *src) 
+            // appends the string pointed to by src to the end of the string pointed to by dest.
+            strcat(line, strInt);
+        }
+        fprintf(fp, "%s\n", line);
 
+    }
+
+    // Close the file
+    fclose(fp);
+}
+
+
+// Save a file of real numbers
+void save_file_real (T_real *array, size_t nbPoints, size_t nbDims, 
+                     const char filename[], const char delim[])
+{
+    // Declaration
+    FILE *fp = NULL;  // File pointer
+
+    // Open the file
     fp = fopen(filename, "w");
     if (fp == NULL) {
         printf("    Fail to open the file: %s\n", filename);
         exit(EXIT_FAILURE);
     }
     
-    if (isBinary) {
-        // Write a binary file
-        size_t counts = 0;
-        counts = fwrite(array, sizeof(T_real) * N * D, 1, fp);
-        if (counts == 0) {
-            fprintf(stderr, "    Fail to write the binary file: %s\n", filename);
-            exit(EXIT_FAILURE);
+    // Write a text file line by line
+    char line[MAX_LINE_LENGTH];
+    char strReal[50];
+    for (size_t i = 0; i < nbPoints; i++) {
+        strcpy(line, "");              // Reset line to nothing
+        for (size_t j = 0; j < nbDims; j++) {
+            // The C library function char *strcpy(char *dest, const char *src) 
+            // copies the string pointed to, by src to dest.
+            strcpy(strReal, "");
+            
+            // The C library function int sprintf(char *str, const char *format, ...)
+            // sends formatted output to a string pointed to, by str.
+            sprintf(strReal, T_REAL_PRINT"%s", array[i*nbDims + j], delim);
+            
+            // The C library function char *strcat(char *dest, const char *src) 
+            // appends the string pointed to by src to the end of the string pointed to by dest.
+            strcat(line, strReal);
         }
-    } else {
-        // Write a text file
-        /*
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < D; j++) {
-                fprintf(fp, T_REAL_PRINT"%s", array[i*D + j], delim);
-            }
-            fprintf(fp, "\n");
-        }*/
-        
-        // Write a text file line by line
-        char line[MAX_LINE_LENGTH];
-        char strReal[50];
-        for (int i = 0; i < N; i++) {
-            strcpy(line, "");              // Reset line to nothing
-            for (int j = 0; j < D; j++) {
-                // The C library function char *strcpy(char *dest, const char *src) 
-                // copies the string pointed to, by src to dest.
-                strcpy(strReal, "");
-                
-                // The C library function int sprintf(char *str, const char *format, ...)
-                // sends formatted output to a string pointed to, by str.
-                sprintf(strReal, T_REAL_PRINT"%s", array[i*D + j], delim);
-                
-                // The C library function char *strcat(char *dest, const char *src) 
-                // appends the string pointed to by src 
-                // to the end of the string pointed to by dest.
-                strcat(line, strReal);
-            }
-            fprintf(fp, "%s\n", line);
+        fprintf(fp, "%s\n", line);
 
-        }
     }
     
-    fclose(fp);
-}
-
-
-// Save a file of integers (derived from MC-K-means: https://gitlab.cs.univie.ac.at/martinp16cs/MC-K-means/-/tree/master/)
-void save_file_int ( int *array, const size_t N, const size_t D, 
-                     const char filename[], const char delim[], bool isBinary )
-{
-    FILE *fp;  // File pointer
-    
-    fp = fopen(filename, "w");
-    if (fp == NULL) {
-        printf("    Fail to open the file: %s\n", filename);
-        exit(EXIT_FAILURE);
-    }
-    
-    if (isBinary) {
-        // Write a binary file
-        size_t counts = 0;
-        counts = fwrite(array, sizeof(int) * N * D, 1, fp);
-        if (counts == 0) {
-            fprintf(stderr, "    Fail to write the binary file: %s\n", filename);
-            exit(EXIT_FAILURE);
-        }
-    } else {
-        // Write a text file element by element
-        /*
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < D; j++) {
-                fprintf(fp, "%d%s", array[i*D + j], delim);
-            }
-            fprintf(fp, "\n");
-        }*/
-        
-        // Write a text file line by line
-        char line[MAX_LINE_LENGTH];
-        char strInt[50];
-        for (int i = 0; i < N; i++) {
-            strcpy(line, "");
-            for (int j = 0; j < D; j++) {
-                // The C library function char *strcpy(char *dest, const char *src) 
-                // copies the string pointed to, by src to dest.
-                strcpy(strInt, "");
-                
-                // The C library function int sprintf(char *str, const char *format, ...)
-                // sends formatted output to a string pointed to, by str.
-                sprintf(strInt, "%d%s", array[i*D + j], delim);
-                
-                // The C library function char *strcat(char *dest, const char *src) 
-                // appends the string pointed to by src 
-                // to the end of the string pointed to by dest.
-                strcat(line, strInt);
-            }
-            fprintf(fp, "%s\n", line);
-
-        }
-    }
-
+    // Close the file
     fclose(fp);
 }
 
@@ -386,8 +334,8 @@ int main()
     
     // Read input data and cluster labels
     begin = omp_get_wtime();
-    read_file_real(InputData, NB_POINTS, NB_DIMS, INPUT_DATA, "\t", 0, 0);
-    read_file_int(InputLabels, NB_POINTS, 1, INPUT_REF_LABELS, "", 0, 0);
+    read_file_real(InputData, NB_POINTS, NB_DIMS, INPUT_DATA, "\t", 0);
+    read_file_int(InputLabels, NB_POINTS, 1, INPUT_REF_LABELS, "", 0);
     finish = omp_get_wtime();
     printf("read_file_*:       %f s\n", finish - begin);
     
@@ -410,8 +358,8 @@ int main()
     
     // Save amplified data and corresponding cluster labels
     begin = omp_get_wtime();
-    save_file_real(OutputData, NB_POINTS*AMP_FACTOR, NB_DIMS, OUTPUT_DATA, "\t", 0);
-    save_file_int(OutputLabels, NB_POINTS*AMP_FACTOR, 1, OUTPUT_REF_LABELS, "", 0);
+    save_file_real(OutputData, NB_POINTS*AMP_FACTOR, NB_DIMS, OUTPUT_DATA, "\t");
+    save_file_int(OutputLabels, NB_POINTS*AMP_FACTOR, 1, OUTPUT_REF_LABELS, "");
     finish = omp_get_wtime();
     printf("save_file_*:       %f s\n", finish - begin);
     
