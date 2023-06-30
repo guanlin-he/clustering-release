@@ -246,9 +246,9 @@ void kmeans_clustering_on_cpu()
     printf("    Data file reading begins ...\n");
     begin = omp_get_wtime();
     if (DATASET_NAME == "Clouds4D_5E7") {
-        read_file_real(data, nbPoints, nbDims, INPUT_DATA, " ", 0, 0);  // " " delimter for InputDataset-50million.txt
+        read_file_real(data, nbPoints, nbDims, INPUT_DATA, " ", 0);  // " " delimter for InputDataset-50million.txt
     } else {
-        read_file_real(data, nbPoints, nbDims, INPUT_DATA, "\t", 0, 0);
+        read_file_real(data, nbPoints, nbDims, INPUT_DATA, "\t", 0);
     }
     finish = omp_get_wtime();
     Tomp_cpu_readData += (finish - begin);
@@ -266,7 +266,7 @@ void kmeans_clustering_on_cpu()
         finish = omp_get_wtime();
         Tomp_cpu_featureScaling += (finish - begin);
         printf("    Feature scaling completed!\n");
-        // save_file_real(data, nbPoints, nbDims, "output/Data_feature_scaled.txt", "\t", 0);
+        // save_file_real(data, nbPoints, nbDims, "output/Data_feature_scaled.txt", "\t");
     }
     
     // Perform k-means(++) clustering on CPU
@@ -293,9 +293,9 @@ void kmeans_clustering_on_cpu()
     // Save results into .txt files
     printf("    Result saving begins ...\n");
     begin = omp_get_wtime();
-    save_file_int(labels, nbPoints, 1, "output/Labels.txt", "", 0);
-    save_file_int(countPerCluster, nbClusters, 1, "output/CountPerCluster.txt", "", 0);
-    save_file_real(centroids, nbClusters, nbDims, "output/FinalCentroids.txt", "\t", 0);
+    save_file_int(labels, nbPoints, 1, "output/Labels.txt", "");
+    save_file_int(countPerCluster, nbClusters, 1, "output/CountPerCluster.txt", "");
+    save_file_real(centroids, nbClusters, nbDims, "output/FinalCentroids.txt", "\t");
     finish = omp_get_wtime();
     Tomp_cpu_saveResults += (finish - begin);
     printf("    Result saving completed!\n");
@@ -347,9 +347,9 @@ void kmeans_clustering_on_gpu()
     printf("    Data file reading begins ...\n");
     begin = omp_get_wtime();
     if (DATASET_NAME == "Clouds4D_5E7") {
-        read_file_real(dataT, nbPoints, nbDims, INPUT_DATA, " ", 0, 1);  // " " delimter for InputDataset-50million.txt
+        read_file_real(dataT, nbPoints, nbDims, INPUT_DATA, " ", 1);  // " " delimter for InputDataset-50million.txt
     } else {
-        read_file_real(dataT, nbPoints, nbDims, INPUT_DATA, "\t", 0, 1);
+        read_file_real(dataT, nbPoints, nbDims, INPUT_DATA, "\t", 1);
     }
     finish = omp_get_wtime();
     Tomp_cpu_readData += (finish - begin);
@@ -382,7 +382,7 @@ void kmeans_clustering_on_gpu()
         // real_data_transfers_gpu_to_cpu(GPU_dataT, (sizeof(T_real)*nbDims)*nbPoints,  // input
                                        // dataT);                                       // output
         // real_data_unregister(dataT);
-        // save_file_real(dataT, nbDims, nbPoints, "output/DataT_feature_scaled.txt", "\t", 0);
+        // save_file_real(dataT, nbDims, nbPoints, "output/DataT_feature_scaled.txt", "\t");
     }
     
     // Perform k-means(++) clustering on GPU
@@ -431,9 +431,9 @@ void kmeans_clustering_on_gpu()
     // Save results into .txt files
     printf("    Result saving begins ...\n");
     begin = omp_get_wtime();
-    save_file_int(labels, nbPoints, 1, "output/Labels.txt", "", 0);
-    save_file_int(countPerCluster, nbClusters, 1, "output/CountPerCluster.txt", "", 0);
-    save_file_real(centroids, nbClusters, nbDims, "output/FinalCentroids.txt", "\t", 0);
+    save_file_int(labels, nbPoints, 1, "output/Labels.txt", "");
+    save_file_int(countPerCluster, nbClusters, 1, "output/CountPerCluster.txt", "");
+    save_file_real(centroids, nbClusters, nbDims, "output/FinalCentroids.txt", "\t");
     finish = omp_get_wtime();
     Tomp_cpu_saveResults += (finish - begin);
     printf("    Result saving completed!\n");
@@ -476,9 +476,9 @@ void spectral_clustering_on_cpu()
     printf("    Data file reading begins ...\n");
     begin = omp_get_wtime();
     if (DATASET_NAME == "Clouds4D_5E7") {
-        read_file_real(data, nbPoints, nbDims, INPUT_DATA, " ", 0, 0);  // " " delimter for InputDataset-50million.txt
+        read_file_real(data, nbPoints, nbDims, INPUT_DATA, " ", 0);  // " " delimter for InputDataset-50million.txt
     } else {
-        read_file_real(data, nbPoints, nbDims, INPUT_DATA, "\t", 0, 0);
+        read_file_real(data, nbPoints, nbDims, INPUT_DATA, "\t", 0);
     }
     finish = omp_get_wtime();
     Tomp_cpu_readData += (finish - begin);
@@ -500,7 +500,7 @@ void spectral_clustering_on_cpu()
         free(dimMax);
         free(dimMin);
         printf("    Feature scaling completed!\n");
-        // save_file_real(data, nbPoints, nbDims, "output/Data_feature_scaled.txt", "\t", 0);
+        // save_file_real(data, nbPoints, nbDims, "output/Data_feature_scaled.txt", "\t");
     }
     
     // Construct the similarity matrix in dense/CSR format on CPU
@@ -521,8 +521,8 @@ void spectral_clustering_on_cpu()
     // Save results into .txt files
     // printf("    Result saving begins ...\n");
     // begin = omp_get_wtime();
-    // save_file_int(labels, nbPoints, 1, "output/Labels.txt", "", 0);
-    // save_file_real(centroids, nbClusters, nbDims, "output/FinalCentroids.txt", "\t", 0);
+    // save_file_int(labels, nbPoints, 1, "output/Labels.txt", "");
+    // save_file_real(centroids, nbClusters, nbDims, "output/FinalCentroids.txt", "\t");
     // finish = omp_get_wtime();
     // Tomp_cpu_saveResults += (finish - begin);
     // printf("    Result saving completed!\n");
@@ -577,9 +577,9 @@ void spectral_clustering_on_gpu()
     printf("    Data file reading begins ...\n");
     begin = omp_get_wtime();
     if (DATASET_NAME == "Clouds4D_5E7") {
-        read_file_real(dataT, nbPoints, nbDims, INPUT_DATA, " ", 0, 1);  // " " delimter for InputDataset-50million.txt
+        read_file_real(dataT, nbPoints, nbDims, INPUT_DATA, " ", 1);  // " " delimter for InputDataset-50million.txt
     } else {
-        read_file_real(dataT, nbPoints, nbDims, INPUT_DATA, "\t", 0, 1);
+        read_file_real(dataT, nbPoints, nbDims, INPUT_DATA, "\t", 1);
     }
     finish = omp_get_wtime();
     Tomp_cpu_readData += (finish - begin);
@@ -616,7 +616,7 @@ void spectral_clustering_on_gpu()
         // real_data_transfers_gpu_to_cpu(GPU_dataT, (sizeof(T_real)*nbDims)*nbPoints,  // input
                                        // dataT);                                       // output
         // real_data_unregister(dataT);
-        // save_file_real(dataT, nbDims, nbPoints, "output/DataT_feature_scaled.txt", "\t", 0);
+        // save_file_real(dataT, nbDims, nbPoints, "output/DataT_feature_scaled.txt", "\t");
     }
     
     // Perform spectral clustering on GPU with one of the following implementations
@@ -720,9 +720,9 @@ void spectral_clustering_on_gpu()
     // Save results into .txt files
     printf("    Result saving begins ...\n");
     begin = omp_get_wtime();
-    save_file_int(labels, nbPoints, 1, "output/Labels.txt", "", 0);
+    save_file_int(labels, nbPoints, 1, "output/Labels.txt", "");
     if (SCImpGPU == DN_CUS || SCImpGPU == SP_NVG_KM) {
-        save_file_int(countPerCluster, nbClusters, 1, "output/CountPerCluster.txt", "", 0);
+        save_file_int(countPerCluster, nbClusters, 1, "output/CountPerCluster.txt", "");
     }
     finish = omp_get_wtime();
     Tomp_cpu_saveResults += (finish - begin);
@@ -789,9 +789,9 @@ void rep_based_sc_on_gpu()
     printf("    Data file reading begins ...\n");
     begin = omp_get_wtime();
     if (DATASET_NAME == "Clouds4D_5E7") {
-        read_file_real(dataT, nbPoints, nbDims, INPUT_DATA, " ", 0, 1);  // " " delimter for InputDataset-50million.txt
+        read_file_real(dataT, nbPoints, nbDims, INPUT_DATA, " ", 1);  // " " delimter for InputDataset-50million.txt
     } else {
-        read_file_real(dataT, nbPoints, nbDims, INPUT_DATA, "\t", 0, 1);
+        read_file_real(dataT, nbPoints, nbDims, INPUT_DATA, "\t", 1);
     }
     finish = omp_get_wtime();
     Tomp_cpu_readData += (finish - begin);
@@ -832,7 +832,7 @@ void rep_based_sc_on_gpu()
         // real_data_transfers_gpu_to_cpu(GPU_dataT, (sizeof(T_real)*nbDims)*nbPoints,  // input
                                        // dataT);                                       // output
         // real_data_unregister(dataT);
-        // save_file_real(dataT, nbDims, nbPoints, "output/DataT_feature_scaled.txt", "\t", 0);
+        // save_file_real(dataT, nbDims, nbPoints, "output/DataT_feature_scaled.txt", "\t");
     }
 
     // Extract representatives on GPU with one of the following algorithms
@@ -900,7 +900,7 @@ void rep_based_sc_on_gpu()
     // real_data_transfers_gpu_to_cpu(GPU_reps, sizeof(T_real)*nbReps*nbDims,  // input
                                    // reps);                                   // output
     // real_data_unregister(reps);
-    // save_file_real(reps, nbReps, nbDims, "output/Representatives.txt", "\t", 0);
+    // save_file_real(reps, nbReps, nbDims, "output/Representatives.txt", "\t");
     
     // Transpose the matrix of representatives on GPU
     printf("    Transposition of representative matrix begins ...\n");
@@ -1002,7 +1002,7 @@ void rep_based_sc_on_gpu()
     // int_data_transfers_gpu_to_cpu(GPU_labelsReps, sizeof(int)*nbReps,  // input
                                   // labelsReps);                         // output
     // int_data_unregister(labelsReps);
-    // save_file_int(labelsReps, nbReps, 1, "output/LabelsReps.txt", "\t", 0);
+    // save_file_int(labelsReps, nbReps, 1, "output/LabelsReps.txt", "\t");
     
     // Attach each data instance to its nearest representative on GPU
     printf("    Membership attachment of input data begins ...\n");
@@ -1033,9 +1033,9 @@ void rep_based_sc_on_gpu()
     // Save results into .txt files
     printf("    Result saving begins ...\n");
     begin = omp_get_wtime();
-    save_file_int(labels, nbPoints, 1, "output/Labels.txt", "", 0);
+    save_file_int(labels, nbPoints, 1, "output/Labels.txt", "");
     if (SCImpGPU == DN_CUS || SCImpGPU == SP_NVG_KM) {
-        save_file_int(countRepsPerCluster, nbClusters, 1, "output/CountRepsPerCluster.txt", "", 0);
+        save_file_int(countRepsPerCluster, nbClusters, 1, "output/CountRepsPerCluster.txt", "");
     }
     finish = omp_get_wtime();
     Tomp_cpu_saveResults += (finish - begin);
@@ -1090,9 +1090,9 @@ void rep_based_sc_on_cpu()
     printf("    Data file reading begins ...\n");
     begin = omp_get_wtime();
     if (DATASET_NAME == "Clouds4D_5E7") {
-        read_file_real(data, nbPoints, nbDims, INPUT_DATA, " ", 0, 0);  // " " delimter for InputDataset-50million.txt
+        read_file_real(data, nbPoints, nbDims, INPUT_DATA, " ", 0);  // " " delimter for InputDataset-50million.txt
     } else {
-        read_file_real(data, nbPoints, nbDims, INPUT_DATA, "\t", 0, 0);
+        read_file_real(data, nbPoints, nbDims, INPUT_DATA, "\t", 0);
     }
     finish = omp_get_wtime();
     Tomp_cpu_readData += (finish - begin);
@@ -1114,7 +1114,7 @@ void rep_based_sc_on_cpu()
         free(dimMax);
         free(dimMin);
         printf("    Feature scaling on the CPU completed!\n");
-        // save_file_real(data, nbPoints, nbDims, "output/Data_feature_scaled.txt", "\t", 0);
+        // save_file_real(data, nbPoints, nbDims, "output/Data_feature_scaled.txt", "\t");
     }
 
     // Extract representatives on CPU with one of the following algorithms
@@ -1172,8 +1172,8 @@ void rep_based_sc_on_cpu()
     }
     
     // Save extracted representatives and temporary cluster labels into .txt files
-    save_file_real(reps, nbReps, nbDims, "output/Representatives.txt", "\t", 0);
-    save_file_int(labels, nbPoints, 1, "output/LabelsToReps.txt", "", 0);
+    save_file_real(reps, nbReps, nbDims, "output/Representatives.txt", "\t");
+    save_file_int(labels, nbPoints, 1, "output/LabelsToReps.txt", "");
     
     // Call the Spectral Clustering API of scikit-learn and then perform input data attachment
     // ...
@@ -1186,7 +1186,7 @@ void rep_based_sc_on_cpu()
     // Save results into .txt files
     // printf("    Result saving begins ...\n");
     // begin = omp_get_wtime();
-    // save_file_int(labels, nbPoints, 1, "output/Labels.txt", "", 0);
+    // save_file_int(labels, nbPoints, 1, "output/Labels.txt", "");
     // finish = omp_get_wtime();
     // Tomp_cpu_saveResults += (finish - begin);
     // printf("    Result saving completed!\n");
@@ -1245,9 +1245,9 @@ void rep_based_sc_on_cpu_gpu()
     printf("    Data file reading begins ...\n");
     begin = omp_get_wtime();
     if (DATASET_NAME == "Clouds4D_5E7") {
-        read_file_real(data, nbPoints, nbDims, INPUT_DATA, " ", 0, 0);  // " " delimter for InputDataset-50million.txt
+        read_file_real(data, nbPoints, nbDims, INPUT_DATA, " ", 0);  // " " delimter for InputDataset-50million.txt
     } else {
-        read_file_real(data, nbPoints, nbDims, INPUT_DATA, "\t", 0, 0);
+        read_file_real(data, nbPoints, nbDims, INPUT_DATA, "\t", 0);
     }
     finish = omp_get_wtime();
     Tomp_cpu_readData += (finish - begin);
@@ -1269,7 +1269,7 @@ void rep_based_sc_on_cpu_gpu()
         free(dimMax);
         free(dimMin);
         printf("    Feature scaling on the CPU completed!\n");
-        // save_file_real(data, nbPoints, nbDims, "output/Data_feature_scaled.txt", "\t", 0);
+        // save_file_real(data, nbPoints, nbDims, "output/Data_feature_scaled.txt", "\t");
     }
 
     // Extract representatives on CPU with one of the following algorithms
@@ -1327,8 +1327,8 @@ void rep_based_sc_on_cpu_gpu()
     }
     
     // Save extracted representatives and temporary cluster labels into .txt files
-    // save_file_real(reps, nbReps, nbDims, "output/Representatives.txt", "\t", 0);
-    // save_file_int(labels, nbPoints, 1, "output/LabelsToReps.txt", "", 0);
+    // save_file_real(reps, nbReps, nbDims, "output/Representatives.txt", "\t");
+    // save_file_int(labels, nbPoints, 1, "output/LabelsToReps.txt", "");
     
     // Transfer representatives from host (CPU) to device (GPU)
     printf("    Host-to-device representatives transfers begins ...\n");
@@ -1461,10 +1461,10 @@ void rep_based_sc_on_cpu_gpu()
     // Save results into .txt files
     printf("    Result saving begins ...\n");
     begin = omp_get_wtime();
-    save_file_int(labels, nbPoints, 1, "output/Labels.txt", "", 0);
-    save_file_real(reps, nbReps, nbDims, "output/Representatives.txt", "\t", 0);
+    save_file_int(labels, nbPoints, 1, "output/Labels.txt", "");
+    save_file_real(reps, nbReps, nbDims, "output/Representatives.txt", "\t");
     if (SCImpGPU == DN_CUS || SCImpGPU == SP_NVG_KM) {
-        save_file_int(countRepsPerCluster, nbClusters, 1, "output/CountRepsPerCluster.txt", "", 0);
+        save_file_int(countRepsPerCluster, nbClusters, 1, "output/CountRepsPerCluster.txt", "");
     }
     finish = omp_get_wtime();
     Tomp_cpu_saveResults += (finish - begin);
