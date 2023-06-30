@@ -210,8 +210,8 @@ void kmeans_cpu (int nbPoints, int nbDims, int nbClusters, T_real *data,
                         centroids);                    // output
         }
     } else {
-        // read_file_real(centroids, nbClusters, nbDims, INPUT_INITIAL_CENTROIDS, "\t", 0, 0);
-        read_file_real(centroids, nbClusters, nbDims, INPUT_INITIAL_CENTROIDS, " ", 0, 0);  // " " delimter for InitialCentroids_InputDataset-50million.txt
+        // read_file_real(centroids, nbClusters, nbDims, INPUT_INITIAL_CENTROIDS, "\t", 0);
+        read_file_real(centroids, nbClusters, nbDims, INPUT_INITIAL_CENTROIDS, " ", 0);  // " " delimter for InitialCentroids_InputDataset-50million.txt
     }
     tf_seeding = omp_get_wtime();
     Tomp_cpu_seeding += (tf_seeding - td_seeding);
@@ -505,8 +505,8 @@ void kmeans_cpu_for_extracting_representatives (int nbPoints, int nbDims, int nb
         tf_sampling = omp_get_wtime();
         Tomp_cpu_seeding += (tf_sampling - td_sampling);
     } else {
-        read_file_real(reps, nbReps, nbDims, INPUT_INITIAL_CENTROIDS, "\t", 0, 0);
-        // read_file_real(reps, nbReps, nbDims, INPUT_INITIAL_CENTROIDS, " ", 0, 0);
+        read_file_real(reps, nbReps, nbDims, INPUT_INITIAL_CENTROIDS, "\t", 0);
+        // read_file_real(reps, nbReps, nbDims, INPUT_INITIAL_CENTROIDS, " ", 0);
     }
 
 
@@ -749,5 +749,5 @@ void kmeans_cpu_for_extracting_representatives (int nbPoints, int nbDims, int nb
     }
     
     // Save results of count
-    // save_file_int(&count[0], nbReps, 1, "output/CountAttachedPointsPerRep.txt", "", 0);
+    // save_file_int(&count[0], nbReps, 1, "output/CountAttachedPointsPerRep.txt", "");
 }

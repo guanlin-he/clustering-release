@@ -1121,8 +1121,8 @@ void kmeans_gpu (int clustAlgo,
     } else {
         T_real *centroids;
         centroids = (T_real *) malloc((sizeof(T_real)*nbClusters)*nbDims);
-        // read_file_real(centroids, nbClusters, nbDims, INPUT_INITIAL_CENTROIDS, "\t", 0, 0);
-        read_file_real(centroids, nbClusters, nbDims, INPUT_INITIAL_CENTROIDS, " ", 0, 0);  // " " delimter for InitialCentroids_InputDataset-50million.txt
+        // read_file_real(centroids, nbClusters, nbDims, INPUT_INITIAL_CENTROIDS, "\t", 0);
+        read_file_real(centroids, nbClusters, nbDims, INPUT_INITIAL_CENTROIDS, " ", 0);  // " " delimter for InitialCentroids_InputDataset-50million.txt
         CHECK_CUDA_SUCCESS(cudaMemcpy(GPU_centroids, centroids, (sizeof(T_real)*nbClusters)*nbDims, cudaMemcpyHostToDevice));
         free(centroids);
     }
