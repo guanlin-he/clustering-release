@@ -79,8 +79,8 @@ void similarity_graph_partitioning_via_nvgraph (int nbPoints, int nbClusters, in
         // eigvect_nvg = (T_real *) malloc((sizeof(T_real)*nbClusters)*nbPoints);
         // CHECK_CUDA_SUCCESS(cudaMemcpy(eigval_nvg, GPU_eigVals, sizeof(T_real)*nbClusters, cudaMemcpyDeviceToHost));   // Transfer nbClusters eigenvalues back to host
         // CHECK_CUDA_SUCCESS(cudaMemcpy(eigvect_nvg, GPU_eigVects, (sizeof(T_real)*nbClusters)*nbPoints, cudaMemcpyDeviceToHost));  // Transfer nbClusters eigenvectors back to host
-        // save_file_real(eigval_nvg,  nbClusters, 1,          "output/Eigenvalues.txt",  "",   0);
-        // save_file_real(eigvect_nvg, nbPoints,   nbClusters, "output/Eigenvectors.txt", "\t", 0);
+        // save_file_real(eigval_nvg,  nbClusters, 1,          "output/Eigenvalues.txt",  "");
+        // save_file_real(eigvect_nvg, nbPoints,   nbClusters, "output/Eigenvectors.txt", "\t");
         // free(eigval_nvg);
         // free(eigvect_nvg);
     

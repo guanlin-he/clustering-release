@@ -123,7 +123,7 @@ void constr_dense_sim_matrix (int nbPoints, int nbDims, T_real *data,
     
     double begin, finish;
     begin = omp_get_wtime();
-    save_file_real(sim, nbPoints, nbPoints, "output/SimMat-dense.txt", "\t", 0);
+    save_file_real(sim, nbPoints, nbPoints, "output/SimMat-dense.txt", "\t");
     finish = omp_get_wtime();
     Tomp_cpu_saveSimMatrix += (finish - begin);
     
@@ -332,9 +332,9 @@ void constr_csr_sim_matrix_using_monothread (int nbPoints, int nbDims, T_real *d
     // Save the CSR representation of similarity matrix
     double begin, finish;
     begin = omp_get_wtime();
-    save_file_real(csrVal, nnz,          1, "output/SimMat-csrVal.txt", "", 0);
-    save_file_int (csrRow, nbPoints + 1, 1, "output/SimMat-csrRow.txt", "", 0);
-    save_file_int (csrCol, nnz,          1, "output/SimMat-csrCol.txt", "", 0);
+    save_file_real(csrVal, nnz,          1, "output/SimMat-csrVal.txt", "");
+    save_file_int (csrRow, nbPoints + 1, 1, "output/SimMat-csrRow.txt", "");
+    save_file_int (csrCol, nnz,          1, "output/SimMat-csrCol.txt", "");
     finish = omp_get_wtime();
     Tomp_cpu_saveSimMatrix += (finish - begin);
     
@@ -583,9 +583,9 @@ void constr_csr_sim_matrix_using_multithreads (int nbPoints, int nbDims, T_real 
     // Save the CSR representation of similarity matrix
     double begin, finish;
     begin = omp_get_wtime();
-    save_file_real(csrVal, nnz,          1, "output/SimMat-csrVal.txt", "", 0);
-    save_file_int (csrRow, nbPoints + 1, 1, "output/SimMat-csrRow.txt", "", 0);
-    save_file_int (csrCol, nnz,          1, "output/SimMat-csrCol.txt", "", 0);
+    save_file_real(csrVal, nnz,          1, "output/SimMat-csrVal.txt", "");
+    save_file_int (csrRow, nbPoints + 1, 1, "output/SimMat-csrRow.txt", "");
+    save_file_int (csrCol, nnz,          1, "output/SimMat-csrCol.txt", "");
     finish = omp_get_wtime();
     Tomp_cpu_saveSimMatrix += (finish - begin);
     

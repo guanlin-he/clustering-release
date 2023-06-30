@@ -140,8 +140,8 @@ void spectral_clustering_on_gpu_involving_cusolverdn (int nbPoints, int nbDims, 
         // eigvect_dn = (T_real *) malloc((sizeof(T_real)*nbClusters)*nbPoints);
         // CHECK_CUDA_SUCCESS(cudaMemcpy(eigval_dn, GPU_eigVals, sizeof(T_real)*nbClusters, cudaMemcpyDeviceToHost));   // Transfer nbClusters eigenvalues back to host
         // CHECK_CUDA_SUCCESS(cudaMemcpy(eigvect_dn, GPU_lap, (sizeof(T_real)*nbClusters)*nbPoints, cudaMemcpyDeviceToHost));  // Transfer nbClusters eigenvectors back to host
-        // save_file_real(eigval_dn,  nbClusters, 1,        "output/Eigenvalues.txt",  "",   0);
-        // save_file_real(eigvect_dn, nbPoints, nbClusters, "output/Eigenvectors.txt", "\t", 0);  // the order of "nbClusters" and "nbPoints" is changed, since there will be buffer overflow due to too long length of row (nbPoints)
+        // save_file_real(eigval_dn,  nbClusters, 1,        "output/Eigenvalues.txt",  "");
+        // save_file_real(eigvect_dn, nbPoints, nbClusters, "output/Eigenvectors.txt", "\t");  // the order of "nbClusters" and "nbPoints" is changed, since there will be buffer overflow due to too long length of row (nbPoints)
         // free(eigval_dn);
         // free(eigvect_dn);
     

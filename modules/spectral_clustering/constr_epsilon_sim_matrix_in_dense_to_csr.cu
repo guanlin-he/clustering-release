@@ -384,9 +384,9 @@ void algo_CSR3_for_similarity_matrix_construction (int nbPoints, int nbDims, T_r
         // CHECK_CUDA_SUCCESS(cudaMemcpy(csrValS, *GPU_csrValS, sizeof(T_real)*(*nnzS), cudaMemcpyDeviceToHost)); 
         // CHECK_CUDA_SUCCESS(cudaMemcpy(csrRowS, GPU_csrRowS, sizeof(int)*(nbPoints + 1), cudaMemcpyDeviceToHost)); 
         // CHECK_CUDA_SUCCESS(cudaMemcpy(csrColS, *GPU_csrColS, sizeof(int)*(*nnzS), cudaMemcpyDeviceToHost)); 
-        // save_file_real(csrValS, (*nnzS),      1, "output/csrValS_s3.txt", "", 0);
-        // save_file_int (csrRowS, nbPoints + 1, 1, "output/csrRowS_s3.txt", "", 0);
-        // save_file_int (csrColS, (*nnzS),      1, "output/csrColS_s3.txt", "", 0);
+        // save_file_real(csrValS, (*nnzS),      1, "output/csrValS_s3.txt", "");
+        // save_file_int (csrRowS, nbPoints + 1, 1, "output/csrRowS_s3.txt", "");
+        // save_file_int (csrColS, (*nnzS),      1, "output/csrColS_s3.txt", "");
         // free(csrValS);
         // free(csrRowS);
         // free(csrColS);

@@ -462,19 +462,19 @@ void identify_noise_and_get_noise_free_similarity_matrix_in_csr (int nbPoints, i
         // int *csrRowSNF;
         // csrRowSNF = (int *) malloc(sizeof(int)*(*nbPointsNF + 1));
         // CHECK_CUDA_SUCCESS(cudaMemcpy(csrRowSNF, *GPU_csrRowSNF, sizeof(int)*(*nbPointsNF + 1), cudaMemcpyDeviceToHost));
-        // save_file_int(csrRowSNF, *nbPointsNF + 1, 1, "output/csrRowSNF.txt", "", 0);
+        // save_file_int(csrRowSNF, *nbPointsNF + 1, 1, "output/csrRowSNF.txt", "");
         // free(csrRowSNF);
     
         // int *csrColSNF;
         // csrColSNF = (int *) malloc(sizeof(int)*(*nnzSNF));
         // CHECK_CUDA_SUCCESS(cudaMemcpy(csrColSNF, *GPU_csrColSNF, sizeof(int)*(*nnzSNF), cudaMemcpyDeviceToHost));
-        // save_file_int(csrColSNF, *nnzSNF, 1, "output/csrColSNF.txt", "", 0);
+        // save_file_int(csrColSNF, *nnzSNF, 1, "output/csrColSNF.txt", "");
         // free(csrColSNF);
         
         // T_real *csrValSNF;
         // csrValSNF = (T_real *) malloc(sizeof(T_real)*(*nnzSNF));
         // CHECK_CUDA_SUCCESS(cudaMemcpy(csrValSNF, *GPU_csrValSNF, sizeof(T_real)*(*nnzSNF), cudaMemcpyDeviceToHost));
-        // save_file_real(csrValSNF, *nnzSNF, 1, "output/csrValSNF.txt", "", 0);
+        // save_file_real(csrValSNF, *nnzSNF, 1, "output/csrValSNF.txt", "");
         // free(csrValSNF);
 }
 

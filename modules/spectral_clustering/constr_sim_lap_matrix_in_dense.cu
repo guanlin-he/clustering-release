@@ -285,8 +285,8 @@ void construct_similarity_degree_matrix (int nbPoints, int nbDims, T_real *GPU_d
         // deg = (T_real *) malloc(sizeof(T_real)*nbPoints);
         // CHECK_CUDA_SUCCESS(cudaMemcpy(sim, GPU_sim, (sizeof(T_real)*nbPoints)*nbPoints, cudaMemcpyDeviceToHost));
         // CHECK_CUDA_SUCCESS(cudaMemcpy(deg, GPU_deg, sizeof(T_real)*nbPoints, cudaMemcpyDeviceToHost));
-        // save_file_real(sim, nbPoints, nbPoints, "output/SimilarityMatrix.txt", "\t", 0);
-        // save_file_real(deg, nbPoints, 1, "output/DegreeMatrix.txt", "", 0);
+        // save_file_real(sim, nbPoints, nbPoints, "output/SimilarityMatrix.txt", "\t");
+        // save_file_real(deg, nbPoints, 1, "output/DegreeMatrix.txt", "");
         // free(sim);
         // free(deg);
 }
@@ -316,6 +316,6 @@ void compute_laplacian_matrix (int nbPoints, T_real *GPU_sim, T_real *GPU_deg,
         // T_real *lap;
         // lap = (T_real *) malloc((sizeof(T_real)*nbPoints)*nbPoints);
         // CHECK_CUDA_SUCCESS(cudaMemcpy(lap, GPU_lap, (sizeof(T_real)*nbPoints)*nbPoints, cudaMemcpyDeviceToHost));
-        // save_file_real(lap, nbPoints, nbPoints, "output/LaplacianMatrix.txt", "\t", 0);
+        // save_file_real(lap, nbPoints, nbPoints, "output/LaplacianMatrix.txt", "\t");
         // free(lap);
 }
